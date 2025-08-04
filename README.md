@@ -8,11 +8,11 @@
 ## 시나리오 흐름 
 
 ### CSS Injection을 통한 API 토큰 탈취
-- 
+- 외부 서버에 요청 보내 css injection 수행 
 
 ### API Token 복호화
 - 탈취한 API Token을 디코딩 or 복호화해서 실제로 사용 가능한 관리자용 API 토큰을 얻는다
-- 
+
 ### 관리자 계정 로그인 or 인증 우회
 - API Token을 이용해서 관리자 계정으 로그인을 한다
   
