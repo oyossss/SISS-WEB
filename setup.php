@@ -10,8 +10,8 @@ $stmt->execute([$admin_username]);
 if (!$stmt->fetch()) {
     $stmt = $db->prepare("INSERT INTO users (username, password, token) VALUES (?, ?, ?)");
     $stmt->execute([$admin_username, $admin_password, $admin_token]);
-    echo "✅ admin 계정 생성 완료";
+    echo "admin 계정 생성 완료";
 } else {
-    echo "⚠️ 이미 admin 계정이 있음";
+    echo "이미 admin 계정이 있음";
 }
 ?>
