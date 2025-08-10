@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION['username'] = $user['username'];
             $_SESSION['uid'] = $user['uid'];
             $_SESSION['token'] = $user['token'];
-            header("Location: home.php");
+            header("Location: index.php");
             exit();
         } else {
             $error = "Incorrect username or password.";
@@ -34,10 +34,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Concert Ticketing - Login</title>
+    <title>로그인</title>
 </head>
 <body>
-    <h1>Login to Concert Ticketing</h1><br/>
+    <h1>로그인</h1><br/>
 
     <?php if (!empty($error)): ?>
         <p style="color: red;"><?= htmlspecialchars($error) ?></p>
@@ -45,18 +45,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <form method="POST">
         <div class="form-group">
-            <label for="InputId">Username</label>
-            <input type="text" class="form-control" id="InputId" name="username" placeholder="Enter your username" required>
+            <label for="InputId">이름</label>
+            <input type="text" class="form-control" id="InputId" name="username" placeholder="사용자 이름 입력" required>
         </div>
         <div class="form-group">
-            <label for="InputPassword">Password</label>
-            <input type="password" class="form-control" id="InputPassword" name="password" placeholder="Enter your password" required>
+            <label for="InputPassword">비밀번호</label>
+            <input type="password" class="form-control" id="InputPassword" name="password" placeholder="비밀번호 입력" required>
         </div>
-        <button type="submit" class="btn btn-primary" id="submit">Log in and get your ticket</button>
+            <button type="submit" class="btn btn-primary" id="submit">로그인</button>
     </form>
-
+    
     <p class="row">
-        Don't have an account? <a href="register.php">Register here</a>
+        계정이 없으신가요? <a href="register.php">회원가입하러 가기</a>
     </p>
 </body>
 </html>
