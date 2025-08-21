@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{{ title or "Concert CTF" }}</title>
+<style>
+/* 기본 폰트 & 전체 레이아웃 */
+/* 전체 레이아웃 */
+<style>
+/* 기본 폰트 & 전체 레이아웃 */
+body {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  margin: 24px;
+  color: #333;
+}
+
+/* 네비게이션 */
+nav {
+  margin-bottom: 20px;
+}
+nav a {
+  margin-right: 16px;
+  text-decoration: none;
+  color: #4a4a4a;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+nav a:hover {
+  color: #2196f3;
+  text-decoration: underline;
+}
+
+/* 제목 */
+h1 {
+  font-weight: bold;
+  margin: 16px 0;
+  text-align: center;
+}
+
+/* 입력창 (로그인/폼용) */
+input[type="text"], 
+input[type="password"] {
+  padding: 8px 10px;
+  border: 1px solid #bbb;
+  border-radius: 4px;
+  width: 240px;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+/* 버튼 */
+button {
+  border: none;
+  border-radius: 4px;
+  background: #2a5a2e;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+button:hover { background: #1976d2; }
+button:disabled { background: #aaa; cursor: not-allowed; }
+
+/* 무대 */
+.stage {
+  width: 80%;
+  margin: 10px auto 30px auto;
+  background: #555;
+  color: #fff;
+  text-align: center;
+  padding: 12px;
+  border-radius: 6px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  font-size: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+}
+
+/* 좌석 맵 */
+.seat-map {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 3px;
+}
+
+/* 좌석 행 */
+.row {
+  display: flex;
+  margin-bottom: 4px;
+  gap: 1px;
+  justify-content: center;
+}
+
+/* 특정 열 뒤에 통로 간격 */
+.row .seat:nth-child(8),
+.row .seat:nth-child(30),
+.row .seat:nth-child(52) {
+  margin-right: 28px;
+}
+
+/* 좌석 공통 */
+.seat {
+  position: relative;
+}
+
+/* ✅ 여기 핵심 수정: 좌석 라디오 버튼만 숨김 */
+.seat input[type="radio"] {
+  display: none;
+}
+
+.seat span {
+  width: 18px;
+  height: 18px;
+  display: inline-block;
+  background:#f5f5f5;
+
+  cursor: pointer;
+  transition: background .15s, transform .08s;
+}
+.seat span:hover { background: #eee; transform: scale(1.06); }
+
+/* 예약됨 */
+.seat.reserved span { background: #7A6BE5; color: white; }
+/* 선택됨 */
+.seat.selected span,
+.seat input:checked + span { background: #4caf50; color: white; }
+
+/* 안내 메시지 */
+.msg {
+  margin: 10px auto;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #f0f0f0;
+  width: fit-content;
+  text-align: center;
+}
+.msg { padding: 8px 12px; border:1px solid #ccc; margin: 10px 0; background:#f8f8f8; }
+input[type="text"], input[type="password"] { padding: 6px; width: 240px; }
+button { padding: 6px; }
+table { border-collapse: collapse; }
+th, td { border: 1px solid #ddd; padding: 6px 10px; }
+{% if ticket and ticket['ticket_color'] %}
+    /* Ticket-id: {{ ticket['id'] }} */
+.ticket-card {
+  width:200px;
+  height:50px;
+  padding:10px;
+  margin-top:7px;
+  background-color: {{ ticket['ticket_color'] }};
+    }
+    {% endif %}
+</style>
+
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <nav>
+    <a href="{{ url_for('index') }}">Home</a>
+    {% if session.get('uid') %}
+      <a href="{{ url_for('report') }}">Report</a>
+      <a href="{{ url_for('list_page') }}">List</a>
+      <a href="{{ url_for('mypage') }}">My Page</a>
+      
+      <a href="{{ url_for('logout') }}">Logout ({{ session.get('username') }})</a>
+    {% else %}
+      <a href="{{ url_for('login') }}">Login</a>
+      <a href="{{ url_for('register') }}">Register</a>
+      <a href="{{ url_for('report') }}">Report</a>
+    {% endif %}
+  </nav>
+  <hr>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="msg" id="flash-msg">{{ messages[-1] }}</div>
+      <script>
+        setTimeout(function(){
+          var el = document.getElementById('flash-msg');
+          if (el) el.remove();
+        }, 5000);
+      </script>
+    {% endif %}
+  {% endwith %}
+
+  {% block content %}{% endblock %}
+</body>
+</html>

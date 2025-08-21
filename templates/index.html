@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+<h3>Home 영역의 좌석배치도입니다</h3>
+<small>*원하는 위치의 좌석을 선택해주세요!*</small>
+<form method="POST" action="/buy" id="buy-form">
+  <div>
+    <input name="ticket_color" type="text" >
+  </div>
+  <br>
+  <br>
+  <div class="stage">STAGE</div>
+  <div class="seat-map">
+{% for r in range(20) %}
+  <div class="row">
+    {% for c in range(60) %}
+      {% set code = "r" ~ r ~ "_c" ~ c %}
+      <label class="seat
+        {% if code in reserved %} reserved{% endif %}
+        {% if selected == code %} selected{% endif %}">
+        <input type="radio" name="seat_code" value="{{ code }}"
+               {% if code in reserved %}disabled{% endif %}>
+        <span></span>
+      </label>
+    {% endfor %}
+  </div>
+{% endfor %}  </div>
+
+  {% if not logged_in %}
+    <div class="msg">Login required to purchase.</div>
+  {% endif %}
+
+  <button type="submit" {% if not logged_in %}disabled{% endif %}>
+    Buy Ticket
+  </button>
+</form>
+
+{% if msg %}
+  <div class="msg">{{ msg }}</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>My Page</h2>
+
+<!-- 관리자/사용자 공통: 토큰 표시 
+<div>
+  <meta name = "InputApitoken" value="{{ user['token'] }}">
+  <meta name = "Auth-Code" value = "84129321231313" >
+</div>
+-->
+<div>
+  <input type = "text" value = "{{user['token']}}">
+</div>
+<!-- 티켓 영역 -->
+{% if ticket %}
+  <h3>My Ticket</h3>
+  <div class="ticket-card" style="background: {{ ticket['ticket_color']|safe }}">
+    Seat: {{ ticket['seat_code'] }}
+  </div>
+  <!-- 주석으로 ticket_id 노출 (참가자가 눈치채게끔) -->
+  <!-- ticket_id={{ ticket['id'] }} -->
+{% else %}
+  <p>No tickets purchased.</p>
+{% endif %}
+
+<!-- 동적으로 CSS payload 주입 -->
+{% if ticket and ticket['ticket_color'] %}
+<style>
+/* 참가자가 입력한 ticket_color 그대로 스타일로 삽입 */
+.ticket-card {
+  {{ ticket['ticket_color']|safe }}
+}
+</style>
+{% endif %}
+
+{% endblock %}

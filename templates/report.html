@@ -1,0 +1,15 @@
+
+{% extends "base.html" %}
+{% block content %}
+<h2>Report</h2>
+<label>아래에 URL을 제출하여 시스템 오류 상황을 보고할 수 있습니다</label>
+{% if msg %}<div class="msg">{{ msg }}</div>{% endif %}
+<br>
+<form method="POST">
+  <div><input name="path" placeholder="문제 발생 신고"></div>
+  <div style="margin-top:10px;"><button type="submit">Submit</button></div>
+</form>
+<br>
+<small>관리자가 모니터링 중입니다..</small>
+
+{% endblock %}
